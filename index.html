@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050505">
+<title>Mi Entrenamiento App — Organiza tu rutina de una vez por todas</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Archivo:ital,wght@0,400;0,500;0,700;0,900;1,900&display=swap" rel="stylesheet">
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window,document,"script",
+"https://connect.facebook.net/en_US/fbevents.js");
+fbq("init","1501536881080755");
+fbq("track","PageView");
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1501536881080755&ev=PageView&noscript=1"/></noscript>
+<!-- End Meta Pixel Code -->
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050505;
+  --surface:#111;
+  --surface2:#181818;
+  --border:#222;
+  --lime:#c8f135;
+  --lime2:#a8d010;
+  --red:#ff2d2d;
+  --white:#f0ede8;
+  --muted:#888;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:'Archivo',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.lime{color:var(--lime)}.red{color:var(--red)}
+
+/* BAR */
+.bar{background:var(--lime);color:#050505;text-align:center;padding:10px 16px;font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+
+/* HERO */
+.hero{padding:48px 20px 40px;max-width:680px;margin:0 auto}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.hero-kicker span{width:24px;height:2px;background:var(--lime);display:inline-block}
+h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,13vw,100px);line-height:.92;letter-spacing:1px;margin-bottom:8px}
+.h1-line2{color:var(--lime);display:block}
+.h1-strike{position:relative;color:#333;display:inline-block}
+.h1-strike::after{content:'';position:absolute;left:-2px;right:-2px;top:52%;height:4px;background:var(--red);transform:rotate(-1.5deg)}
+.hero-p{font-size:16px;line-height:1.65;color:#999;margin:24px 0 32px;max-width:480px}
+.hero-p strong{color:var(--white);font-weight:700}
+
+/* CTA */
+.cta{display:flex;align-items:center;justify-content:space-between;background:var(--lime);color:#050505;text-decoration:none;padding:18px 22px;border-radius:6px;font-weight:900;font-size:15px;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;border:none;cursor:pointer;width:100%}
+.cta:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 10px 40px rgba(200,241,53,.25)}
+.cta:active{transform:translateY(0)}
+.cta-price{background:rgba(0,0,0,.2);padding:4px 12px;border-radius:4px;font-size:13px;white-space:nowrap}
+.cta-sub{display:flex;align-items:center;gap:16px;margin-top:14px;flex-wrap:wrap}
+.cta-sub span{font-size:12px;color:#666;display:flex;align-items:center;gap:5px}
+.cta-sub span::before{content:'✓';color:var(--lime);font-weight:700}
+
+.divider{height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin:0 20px}
+
+/* SECTIONS */
+.section{padding:56px 20px;max-width:680px;margin:0 auto}
+.eyebrow{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-bottom:14px}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,8vw,56px);line-height:.95;letter-spacing:.5px;margin-bottom:36px}
+
+/* VIDEO */
+.video-wrap{padding:0 20px 56px;max-width:680px;margin:0 auto}
+.video-container{border-radius:14px;overflow:hidden;border:1px solid var(--border);background:#000;position:relative}
+.video-container video{width:100%;display:block;max-height:500px;object-fit:cover}
+.video-label{font-size:12px;color:var(--muted);text-align:center;margin-top:10px;letter-spacing:1px;text-transform:uppercase}
+
+/* PAIN */
+.pain-list{display:flex;flex-direction:column}
+.pain-item{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid var(--border);opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease}
+.pain-item.show{opacity:1;transform:none}
+.pain-item:first-child{border-top:1px solid var(--border)}
+.pain-num{font-family:'Bebas Neue',sans-serif;font-size:36px;color:#2a2a2a;line-height:1;padding-top:2px}
+.pain-title{font-size:16px;font-weight:700;color:var(--white);margin-bottom:4px}
+.pain-desc{font-size:14px;color:#888;line-height:1.6}
+
+/* AGIT */
+.agit{background:var(--red);padding:48px 20px;text-align:center}
+.agit-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,7vw,52px);line-height:1.05;color:#fff;max-width:560px;margin:0 auto}
+.agit-title em{font-style:normal;background:#000;color:var(--red);padding:0 8px}
+
+/* HOW IT WORKS */
+.how-wrap{background:var(--surface);padding:56px 20px}
+.how-inner{max-width:680px;margin:0 auto}
+.steps{display:flex;flex-direction:column;gap:0;margin-top:32px}
+.step{display:grid;grid-template-columns:56px 1fr;gap:16px;padding:24px 0;border-bottom:1px solid var(--border)}
+.step:first-child{border-top:1px solid var(--border)}
+.step-num{width:40px;height:40px;border-radius:50%;background:var(--lime);color:#050505;font-family:'Bebas Neue',sans-serif;font-size:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.step h3{font-size:15px;font-weight:700;color:var(--white);margin-bottom:4px}
+.step p{font-size:13px;color:#888;line-height:1.6}
+
+/* SOLUTION */
+.sol-wrap{padding:56px 20px}
+.sol-inner{max-width:680px;margin:0 auto}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:32px}
+@media(max-width:480px){.features{grid-template-columns:1fr}}
+.feat{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:20px;opacity:0;transform:translateY(12px);transition:opacity .4s ease,transform .4s ease}
+.feat.show{opacity:1;transform:none}
+.feat:hover{border-color:rgba(200,241,53,.2)}
+.feat-icon{font-size:22px;margin-bottom:10px;display:block}
+.feat h3{font-size:14px;font-weight:700;margin-bottom:6px;color:var(--white)}
+.feat p{font-size:13px;color:#888;line-height:1.55}
+
+/* BEFORE/AFTER */
+.ad-wrap{background:var(--surface);padding:56px 20px}
+.ad-inner{max-width:680px;margin:0 auto}
+.ad-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px;border-radius:10px;overflow:hidden;margin-top:32px}
+.ad-col{padding:24px 18px}
+.ad-col.before{background:rgba(255,45,45,.07);border:1px solid rgba(255,45,45,.15);border-radius:10px 0 0 10px}
+.ad-col.after{background:rgba(200,241,53,.05);border:1px solid rgba(200,241,53,.12);border-radius:0 10px 10px 0}
+.ad-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;display:block}
+.before .ad-label{color:var(--red)}.after .ad-label{color:var(--lime)}
+.ad-item{font-size:13px;line-height:1.5;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;gap:8px;align-items:flex-start}
+.ad-item:last-child{border-bottom:none}
+.before .ad-item{color:#999}.after .ad-item{color:#ccc}
+.ad-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:5px}
+.before .ad-dot{background:var(--red);opacity:.5}.after .ad-dot{background:var(--lime)}
+
+/* TESTIMONIALS */
+.test-wrap{padding:56px 20px;max-width:680px;margin:0 auto}
+.test-grid{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+.test-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative}
+.test-card::before{content:'❝';position:absolute;top:16px;right:20px;font-size:40px;color:var(--lime);opacity:.15;font-family:Georgia,serif;line-height:1}
+.test-stars{color:var(--lime);font-size:14px;margin-bottom:10px;letter-spacing:2px}
+.test-text{font-size:14px;color:#bbb;line-height:1.7;margin-bottom:16px;font-style:italic}
+.test-author{display:flex;align-items:center;gap:10px}
+.test-avatar{width:36px;height:36px;border-radius:50%;background:var(--lime);color:#050505;font-family:'Bebas Neue',sans-serif;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.test-name{font-size:13px;font-weight:700;color:var(--white)}
+.test-handle{font-size:11px;color:var(--muted)}
+
+/* OBJECTIONS */
+.obj-wrap{background:var(--surface);padding:56px 20px}
+.obj-inner{max-width:680px;margin:0 auto}
+.obj-list{display:flex;flex-direction:column;gap:12px;margin-top:32px}
+.obj-item{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.obj-q{padding:16px 18px;font-size:14px;font-weight:700;color:var(--white);display:flex;justify-content:space-between;align-items:center;cursor:pointer;gap:12px}
+.obj-q .icon{color:var(--lime);font-size:18px;flex-shrink:0;transition:transform .2s}
+.obj-item.open .icon{transform:rotate(45deg)}
+.obj-a{display:none;padding:0 18px 16px;font-size:13px;color:#999;line-height:1.65}
+.obj-item.open .obj-a{display:block}
+
+/* GUARANTEE */
+.guar-wrap{padding:56px 20px;max-width:680px;margin:0 auto}
+.guar-card{background:var(--surface);border:1px solid rgba(200,241,53,.15);border-radius:16px;padding:32px 24px;display:flex;gap:20px;align-items:flex-start}
+.guar-icon{font-size:48px;flex-shrink:0}
+.guar-title{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--lime);margin-bottom:8px;letter-spacing:1px}
+.guar-text{font-size:14px;color:#888;line-height:1.65}
+@media(max-width:480px){.guar-card{flex-direction:column;gap:12px}}
+
+/* PRICE */
+.price-wrap{background:var(--surface);padding:56px 20px}
+.price-inner{max-width:480px;margin:0 auto;text-align:center}
+.price-card{background:var(--bg);border:1px solid rgba(200,241,53,.25);border-radius:16px;padding:40px 28px;position:relative;overflow:hidden;margin-top:32px}
+.price-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--lime),var(--lime2))}
+.price-card::after{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(200,241,53,.06) 0%,transparent 70%);pointer-events:none}
+.launch-badge{display:inline-block;background:var(--red);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+.price-old{font-size:14px;color:#444;text-decoration:line-through;margin-bottom:4px}
+.price-tag{display:flex;align-items:flex-end;justify-content:center;gap:4px;margin-bottom:4px}
+.price-sym{font-size:24px;font-weight:700;color:var(--lime);padding-bottom:12px}
+.price-n{font-family:'Bebas Neue',sans-serif;font-size:96px;line-height:1;letter-spacing:-2px;color:var(--lime)}
+.price-type{font-size:13px;color:#555;margin-bottom:6px}
+.price-once{font-size:12px;color:var(--lime);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:28px}
+.includes{list-style:none;text-align:left;display:flex;flex-direction:column;gap:10px;margin-bottom:32px;max-width:360px;margin-left:auto;margin-right:auto}
+.includes li{display:flex;align-items:center;gap:10px;font-size:14px;color:#bbb}
+.includes li::before{content:'✓';color:var(--lime);font-weight:900;font-size:13px}
+.price-note{font-size:12px;color:#444;margin-top:14px}
+.urg{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;margin-top:20px;display:flex;align-items:center;gap:14px}
+.urg-icon{font-size:24px;flex-shrink:0}
+.urg-text{font-size:13px;color:#888;line-height:1.5}
+.urg-text strong{color:var(--white);display:block;margin-bottom:2px}
+
+/* FINAL */
+.final{padding:64px 20px 80px;text-align:center;max-width:600px;margin:0 auto}
+.final-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(42px,10vw,72px);line-height:.95;margin-bottom:14px}
+.final-sub{font-size:15px;color:#777;margin-bottom:32px;line-height:1.6}
+.cta-full{display:flex;align-items:center;justify-content:space-between;background:var(--lime);color:#050505;text-decoration:none;padding:20px 24px;border-radius:6px;font-weight:900;font-size:16px;text-transform:uppercase;letter-spacing:.5px;transition:all .2s;width:100%}
+.cta-full:hover{background:var(--lime2);transform:translateY(-2px);box-shadow:0 10px 40px rgba(200,241,53,.25)}
+
+footer{border-top:1px solid var(--border);padding:24px 20px;text-align:center;font-size:11px;color:#333}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-kicker{animation:fadeUp .5s ease both}
+h1{animation:fadeUp .5s .1s ease both}
+.hero-p{animation:fadeUp .5s .2s ease both}
+.cta{animation:fadeUp .5s .3s ease both}
+.cta-sub{animation:fadeUp .5s .35s ease both}
+</style>
+</head>
+<body>
+
+<div class="bar">🔥 Precio de lanzamiento — Pago único · Acceso de por vida</div>
+
+<div class="hero">
+  <div class="hero-kicker"><span></span>App de entrenamiento<span></span></div>
+  <h1>
+    DEJA DE<br>
+    <span class="h1-strike">ENTRENAR</span><br>
+    <span class="h1-line2">A CIEGAS</span>
+  </h1>
+  <p class="hero-p">
+    Llegas al gym, agarras el peso y piensas:
+    <strong>¿fueron 3 o 4 series? ¿Cuál ejercicio sigue? ¿Cuánto levanté la semana pasada?</strong>
+    Tu esfuerzo se está desperdiciando por falta de organización.
+  </p>
+  <a href="https://pay.hotmart.com/B105939655V" target="_blank" class="cta">
+    <span>QUIERO MI APP AHORA</span>
+    <span class="cta-price">$9 · Pago único</span>
+  </a>
+  <div class="cta-sub">
+    <span>Acceso inmediato</span>
+    <span>Sin instalar nada</span>
+    <span>Acceso de por vida</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- VIDEO -->
+<div class="video-wrap">
+  <div class="video-container">
+    <video controls playsinline poster="">
+      <source src="app mi.mp4" type="video/mp4">
+    </video>
+  </div>
+  <p class="video-label">Mira el app en acción</p>
+</div>
+
+<!-- DOR -->
+<div class="section">
+  <p class="eyebrow red">¿Te identificas?</p>
+  <h2 class="section-title">EL GYM NO TE ESTÁ DANDO<br>RESULTADOS POR ESTO</h2>
+  <div class="pain-list">
+    <div class="pain-item">
+      <div class="pain-num">01</div>
+      <div>
+        <div class="pain-title">Cuentas las series en tu cabeza — y pierdes la cuenta</div>
+        <p class="pain-desc">Te distrae un segundo y ya no sabes si vas en la tercera o la cuarta. Haces una más "por si acaso" o paras antes. En ambos casos, el entrenamiento se fue al agua.</p>
+      </div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-num">02</div>
+      <div>
+        <div class="pain-title">No recuerdas el peso que usaste la semana pasada</div>
+        <p class="pain-desc">Progresión de cargas es lo que genera resultados. Sin registro no hay evolución. Llevas meses con el mismo peso sin progresar y ni te das cuenta.</p>
+      </div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-num">03</div>
+      <div>
+        <div class="pain-title">Buscas el screenshot en la galería — y pierdes el hilo</div>
+        <p class="pain-desc">Lo buscas entre mil fotos, lo encuentras, y para cuando lo abres ya olvidaste qué ibas a hacer. Terminas improvisando la rutina completa.</p>
+      </div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-num">04</div>
+      <div>
+        <div class="pain-title">Descansas "a ojo"</div>
+        <p class="pain-desc">Descansas de menos y el músculo no se recupera. Descansas de más y pierdes la intensidad. Sin cronómetro estás adivinando todos los días.</p>
+      </div>
+    </div>
+    <div class="pain-item">
+      <div class="pain-num">05</div>
+      <div>
+        <div class="pain-title">Sales del gym sin saber si entrenaste bien</div>
+        <p class="pain-desc">Esa sensación de "¿habré hecho todo?" cada semana va destruyendo tu motivación sin que te des cuenta. Te esfuerzas pero no tienes certeza de nada.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGIT -->
+<div class="agit">
+  <p class="agit-title">
+    ENTRENAR SIN ORGANIZACIÓN ES COMO<br>
+    MANEJAR CON LOS OJOS <em>CERRADOS</em>.<br>
+    TE MUEVES, PERO NO LLEGAS A NINGÚN LADO.
+  </p>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how-wrap">
+  <div class="how-inner">
+    <p class="eyebrow lime">Cómo funciona</p>
+    <h2 class="section-title">EN 3 PASOS<br><span class="lime">ESTÁS LISTA</span></h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Abre el link y agrega a tu pantalla de inicio</h3>
+          <p>Sin App Store, sin descargar nada. El app vive directo en tu celular como un ícono igual a cualquier otra app.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Personaliza tu rutina</h3>
+          <p>Tus ejercicios ya están cargados. Edita, agrega o elimina lo que quieras. El app se adapta a tu entrenamiento.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Entrena con organización total</h3>
+          <p>Marca cada serie, registra la carga, el cronómetro arranca solo. Sales del gym sabiendo exactamente lo que hiciste.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="sol-wrap">
+  <div class="sol-inner">
+    <p class="eyebrow lime">Lo que incluye</p>
+    <h2 class="section-title">TODO LO QUE<br><span class="lime">NECESITAS.</span></h2>
+    <div class="features">
+      <div class="feat"><span class="feat-icon">✅</span><h3>Check por serie</h3><p>Marca cada serie al momento. Sabes exactamente qué hiciste y qué falta. Cero dudas.</p></div>
+      <div class="feat"><span class="feat-icon">⚖️</span><h3>Registro de carga</h3><p>Anota el peso de cada serie. La próxima semana sabes exactamente desde dónde empezar.</p></div>
+      <div class="feat"><span class="feat-icon">⏱️</span><h3>Cronómetro automático</h3><p>Se activa solo cuando marcas la serie. Vibra cuando es hora de volver. Sin tocar nada.</p></div>
+      <div class="feat"><span class="feat-icon">📋</span><h3>Rutinas organizadas</h3><p>Todos tus entrenamientos en pestañas. Toca e inicia. Sin buscar, sin perderte.</p></div>
+      <div class="feat"><span class="feat-icon">✏️</span><h3>100% editable</h3><p>Agrega, elimina y edita ejercicios, series y cargas cuando quieras.</p></div>
+      <div class="feat"><span class="feat-icon">💾</span><h3>Guardado automático</h3><p>Cierras el app, lo abres de nuevo — todo está ahí. Nada desaparece.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- BEFORE/AFTER -->
+<div class="ad-wrap">
+  <div class="ad-inner">
+    <p class="eyebrow" style="color:var(--muted)">Comparación real</p>
+    <h2 class="section-title">ANTES Y<br>DESPUÉS</h2>
+    <div class="ad-grid">
+      <div class="ad-col before">
+        <span class="ad-label">❌ Sin el app</span>
+        <div class="ad-item"><span class="ad-dot"></span>Cuenta series en la cabeza y pierde</div>
+        <div class="ad-item"><span class="ad-dot"></span>No recuerda el peso usado</div>
+        <div class="ad-item"><span class="ad-dot"></span>Busca screenshot en la galería</div>
+        <div class="ad-item"><span class="ad-dot"></span>Descansa "a ojo"</div>
+        <div class="ad-item"><span class="ad-dot"></span>Sale sin saber si entrenó bien</div>
+        <div class="ad-item"><span class="ad-dot"></span>Meses sin progresar</div>
+      </div>
+      <div class="ad-col after">
+        <span class="ad-label">✅ Con el app</span>
+        <div class="ad-item"><span class="ad-dot"></span>Check en cada serie, sin errores</div>
+        <div class="ad-item"><span class="ad-dot"></span>Carga registrada, progreso real</div>
+        <div class="ad-item"><span class="ad-dot"></span>Rutina en orden, siempre</div>
+        <div class="ad-item"><span class="ad-dot"></span>Cronómetro preciso y automático</div>
+        <div class="ad-item"><span class="ad-dot"></span>Sale sabiendo que entrenó bien</div>
+        <div class="ad-item"><span class="ad-dot"></span>Evolución semana tras semana</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="test-wrap">
+  <p class="eyebrow lime">Quienes ya lo usan</p>
+  <h2 class="section-title">LO QUE<br>DICEN ELLAS</h2>
+  <div class="test-grid">
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Llevaba meses entrenando sin ver resultados y no entendía por qué. Empecé a usar el app y en la primera semana ya me di cuenta del problema — nunca había tenido control real de mis cargas. Ahora sé exactamente lo que hago en cada sesión y mi evolución cambió completamente."</p>
+      <div class="test-author">
+        <div class="test-avatar">D</div>
+        <div>
+          <div class="test-name">Dani</div>
+          <div class="test-handle">Usuaria del app</div>
+        </div>
+      </div>
+    </div>
+    <div class="test-card">
+      <div class="test-stars">★★★★★</div>
+      <p class="test-text">"Yo soy instructora y siempre recomendaba a mis alumnas que anotaran las cargas. El problema era que nadie encontraba un método que funcionara de verdad en el gym. Este app resolvió eso — es simple, rápido y funciona sin internet. Mis alumnas lo adoptaron y los resultados hablan solos."</p>
+      <div class="test-author">
+        <div class="test-avatar">F</div>
+        <div>
+          <div class="test-name">Fabia</div>
+          <div class="test-handle">Instructora · Creadora del app</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OBJECTIONS -->
+<div class="obj-wrap">
+  <div class="obj-inner">
+    <p class="eyebrow" style="color:var(--muted)">Tus dudas</p>
+    <h2 class="section-title">QUIZÁS TE<br>PREGUNTASTE...</h2>
+    <div class="obj-list">
+      <div class="obj-item">
+        <div class="obj-q" onclick="toggleObj(this)"><span>"¿Tengo que descargar alguna app?"</span><span class="icon">+</span></div>
+        <div class="obj-a">No. El app abre directo en el navegador de tu celular. Agregas el link a tu pantalla de inicio y se convierte en un ícono — sin pasar por la App Store, sin ocupar espacio.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q" onclick="toggleObj(this)"><span>"¿Necesita internet en el gym?"</span><span class="icon">+</span></div>
+        <div class="obj-a">No. Después de abrirlo una vez funciona completamente sin conexión. Todo queda guardado en tu celular.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q" onclick="toggleObj(this)"><span>"¿Y si cierro el app en medio del entrenamiento?"</span><span class="icon">+</span></div>
+        <div class="obj-a">Todo se guarda automáticamente con cada acción. Cierras, abres de nuevo — todo está exactamente donde lo dejaste.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q" onclick="toggleObj(this)"><span>"Mi rutina es diferente, ¿puedo editarla?"</span><span class="icon">+</span></div>
+        <div class="obj-a">Sí, al 100%. Agregas, eliminas y editas cualquier ejercicio, serie o carga. Creas rutinas desde cero. El app es completamente tuyo.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q" onclick="toggleObj(this)"><span>"¿Vale la pena pagar $9?"</span><span class="icon">+</span></div>
+        <div class="obj-a">Es menos que un pre-entreno y es pago único — pagas una vez, el app es tuyo para siempre. Un solo entrenamiento hecho correctamente ya justifica la inversión.</div>
+      </div>
+      <div class="obj-item">
+        <div class="obj-q" onclick="toggleObj(this)"><span>"¿Qué pasa si no me gusta?"</span><span class="icon">+</span></div>
+        <div class="obj-a">Tienes 7 días de garantía. Si no te gusta por cualquier motivo, te devolvemos el dinero sin preguntas.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GUARANTEE -->
+<div class="guar-wrap">
+  <div class="guar-card">
+    <div class="guar-icon">🛡️</div>
+    <div>
+      <div class="guar-title">Garantía de 7 días</div>
+      <p class="guar-text">Prueba el app por 7 días completos. Úsalo en el gym, personaliza tu rutina, registra tus cargas. Si por cualquier motivo no te gusta, te devolvemos el 100% de tu dinero. Sin preguntas, sin burocracia.</p>
+    </div>
+  </div>
+</div>
+
+<!-- PRICE -->
+<div class="price-wrap" id="pricing">
+  <div class="price-inner">
+    <p class="eyebrow lime">Inversión</p>
+    <h2 class="section-title">MENOS QUE UN<br>PRE-ENTRENO.<br><span class="lime">UNA SOLA VEZ.</span></h2>
+    <div class="price-card">
+      <span class="launch-badge">⚡ Precio de lanzamiento</span>
+      <p class="price-old">Precio regular: $29</p>
+      <div class="price-tag">
+        <span class="price-sym">$</span>
+        <span class="price-n">9</span>
+      </div>
+      <p class="price-type">pago único</p>
+      <p class="price-once">✦ Acceso de por vida ✦</p>
+      <ul class="includes">
+        <li>Todas tus rutinas organizadas en pestañas</li>
+        <li>Check de series + registro de carga</li>
+        <li>Cronómetro de descanso automático</li>
+        <li>Edita ejercicios, series y cargas</li>
+        <li>Funciona offline, guardado en tu celular</li>
+        <li>Sin App Store, sin descargas</li>
+        <li>Acceso inmediato después del pago</li>
+        <li>Garantía de 7 días</li>
+      </ul>
+      <a href="https://pay.hotmart.com/B105939655V" target="_blank" class="cta-full">
+        <span>QUIERO EMPEZAR AHORA</span>
+        <span class="cta-price" style="background:rgba(0,0,0,.15)">ACCESO INMEDIATO →</span>
+      </a>
+      <p class="price-note">Pago seguro · Garantía de 7 días · Acceso de por vida</p>
+      <div class="urg">
+        <span class="urg-icon">⚡</span>
+        <div class="urg-text">
+          <strong>Este precio es de lanzamiento y puede subir</strong>
+          En menos de 2 minutos ya tienes el app en tu celular, listo para usar hoy en el gym.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FINAL -->
+<div class="final">
+  <h2 class="final-title">TU ESFUERZO<br>MERECE<br><span class="lime">RESULTADOS</span></h2>
+  <p class="final-sub">Ya haces la parte difícil — vas al gym, levantas peso, te esfuerzas. No dejes que la desorganización desperdicie todo eso.</p>
+  <a href="https://pay.hotmart.com/B105939655V" target="_blank" class="cta-full">
+    <span>QUIERO MI RUTINA ORGANIZADA</span>
+    <span class="cta-price" style="background:rgba(0,0,0,.15)">$9 · PAGO ÚNICO</span>
+  </a>
+  <div class="cta-sub" style="justify-content:center;margin-top:14px">
+    <span>Acceso inmediato</span>
+    <span>Sin instalar nada</span>
+    <span>Garantía 7 días</span>
+  </div>
+</div>
+
+<footer>fabiaapp.online · Mi Entrenamiento App · Hecho para quienes se toman en serio el gym</footer>
+
+<script>
+function toggleObj(el){el.parentElement.classList.toggle('open')}
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('show'),i*80)});
+},{threshold:0.1});
+document.querySelectorAll('.pain-item,.feat').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
