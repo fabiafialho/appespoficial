@@ -266,21 +266,25 @@ body::after{
 
 /* ── RESULTADOS ── */
 .results-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:2px;margin:40px 0;
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:40px 0;
+  justify-content:center;
+}
 }
 @media(max-width:640px){.results-grid{grid-template-columns:1fr 1fr;}}
 @media(max-width:400px){.results-grid{grid-template-columns:1fr;}}
 
 .result-img{
-  position:relative;
   background:var(--k3);
   overflow:hidden;
-}
+  width:auto;
+  max-width:100%;
 }
 .result-img img{
-  width:100%;
+  width:auto;
+  max-width:100%;
   height:auto;
   display:block;
 }
