@@ -277,15 +277,13 @@ body::after{
   position:relative;
   background:var(--k3);
   overflow:hidden;
-  aspect-ratio:9/16;
+}
 }
 .result-img img{
-  width:100%;height:100%;
-  object-fit:cover;
+  width:100%;
+  height:auto;
   display:block;
-  transition:transform .4s ease;
 }
-.result-img:hover img{transform:scale(1.03);}
 .result-placeholder{
   position:absolute;inset:0;
   display:flex;flex-direction:column;
