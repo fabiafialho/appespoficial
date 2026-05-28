@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Método Solar 100k</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --y:#FFD000;
+  --y2:#E6B800;
+  --k:#080808;
+  --k2:#0F0F0F;
+  --k3:#161616;
+  --k4:#1E1E1E;
+  --w:#FFFFFF;
+  --g1:#BBBBBB;
+  --g2:#888888;
+  --g3:#444444;
+  --red:#FF3B3B;
+  --green:#00C47A;
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--k);
+  color:var(--w);
+  font-family:'DM Sans',sans-serif;
+  overflow-x:hidden;
+  line-height:1.6;
+}
+body::after{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.022;pointer-events:none;z-index:9998;
+}
+
+/* ── NAV ── */
+.nav{
+  text-align:center;
+  padding:24px 20px;
+  border-bottom:1px solid #111;
+}
+.logo{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;font-size:15px;
+  letter-spacing:7px;color:var(--y);
+  text-transform:uppercase;
+}
+
+/* ── HERO ── */
+.hero{
+  max-width:860px;margin:0 auto;
+  padding:56px 24px 0;
+  text-align:center;
+}
+.hero-tag{
+  display:inline-block;
+  background:var(--y);color:var(--k);
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:700;font-size:11px;
+  letter-spacing:4px;text-transform:uppercase;
+  padding:6px 16px;margin-bottom:32px;
+  opacity:0;animation:fadeUp .7s .1s forwards;
+}
+.hero-h1{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:clamp(52px,9vw,108px);
+  line-height:.92;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:28px;
+  opacity:0;animation:fadeUp .7s .2s forwards;
+}
+.hero-h1 em{font-style:normal;color:var(--y);display:block;}
+.hero-h1 .dim{color:rgba(255,255,255,0.18);display:block;}
+
+.hero-sub{
+  font-size:clamp(16px,2.2vw,20px);
+  font-weight:300;color:var(--g1);
+  max-width:600px;margin:0 auto 20px;
+  line-height:1.6;
+  opacity:0;animation:fadeUp .7s .35s forwards;
+}
+.hero-sub strong{color:var(--w);font-weight:500;}
+
+.hero-proof{
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid #222;
+  padding:11px 20px;
+  font-size:12px;color:var(--g2);
+  margin-bottom:52px;
+  opacity:0;animation:fadeUp .7s .5s forwards;
+}
+.hero-proof b{color:var(--w);font-weight:500;}
+.dot{width:6px;height:6px;background:var(--y);border-radius:50%;flex-shrink:0;}
+
+/* ── PLAYER ── */
+.player-wrap{
+  max-width:860px;margin:0 auto;
+  padding:0 24px;
+  opacity:0;animation:fadeUp .8s .6s forwards;
+}
+.player-box{
+  position:relative;width:100%;
+  background:#0A0A0A;
+  border:1px solid #1A1A1A;
+  overflow:hidden;
+  box-shadow:0 0 100px rgba(255,208,0,.05);
+}
+.player-box::before{content:'';display:block;padding-top:56.25%;}
+.player-inner{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;
+}
+.play-icon{
+  width:76px;height:76px;background:var(--y);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.play-icon svg{width:28px;height:28px;fill:var(--k);margin-left:5px;}
+.player-inner p{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;color:#2A2A2A;
+}
+/* Cole aqui o código da Vturb no lugar do player-inner */
+
+/* ── SEÇÃO OCULTA ── */
+#reveal{
+  display:none;opacity:0;
+  transition:opacity .8s ease;
+}
+#reveal.on{display:block;opacity:1;}
+
+/* ── BOTÃO FLUTUANTE ── */
+#btn-float{
+  display:none;
+  position:fixed;
+  bottom:28px;left:50%;
+  transform:translateX(-50%);
+  z-index:999;
+  animation:popUp .5s cubic-bezier(.34,1.56,.64,1) forwards;
+}
+#btn-float.show{display:flex;}
+@keyframes popUp{
+  from{opacity:0;transform:translateX(-50%) translateY(20px);}
+  to{opacity:1;transform:translateX(-50%) translateY(0);}
+}
+.btn-float-inner{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--y);color:var(--k);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:16px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  text-decoration:none;
+  padding:18px 40px;
+  box-shadow:0 8px 40px rgba(255,208,0,.35);
+  transition:transform .15s,box-shadow .15s;
+  white-space:nowrap;
+}
+.btn-float-inner:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 50px rgba(255,208,0,.45);
+}
+.btn-float-inner svg{width:20px;height:20px;fill:var(--k);flex-shrink:0;}
+.vagas-badge{
+  background:var(--k);color:var(--y);
+  font-size:10px;letter-spacing:2px;
+  padding:4px 10px;
+  border-radius:2px;
+}
+
+/* ── SEPARADORES ── */
+.sep{
+  width:100%;height:1px;
+  background:linear-gradient(90deg,transparent,#1A1A1A 30%,#1A1A1A 70%,transparent);
+  margin:72px 0;
+}
+
+/* ── SECTIONS ── */
+.s{max-width:860px;margin:0 auto;padding:0 24px;}
+
+.eyebrow{
+  display:block;
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;
+  letter-spacing:5px;text-transform:uppercase;
+  color:var(--y);margin-bottom:16px;
+}
+.sec-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:clamp(40px,6vw,68px);
+  line-height:.95;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:20px;
+}
+.sec-h span{color:var(--y);}
+.sec-p{
+  font-size:17px;font-weight:300;
+  color:var(--g1);line-height:1.75;
+  max-width:640px;margin-bottom:12px;
+}
+.sec-p strong{color:var(--w);font-weight:500;}
+
+/* ── DORES ── */
+.dores-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:2px;margin:40px 0;
+}
+@media(max-width:600px){.dores-grid{grid-template-columns:1fr;}}
+.dor{
+  background:var(--k2);padding:32px 28px;
+  position:relative;overflow:hidden;
+  transition:background .25s;cursor:default;
+}
+.dor:hover{background:var(--k3);}
+.dor::after{
+  content:'';position:absolute;
+  top:0;left:0;width:100%;height:2px;
+  background:var(--red);
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s ease;
+}
+.dor:hover::after{transform:scaleX(1);}
+.dor-n{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:11px;font-weight:700;
+  letter-spacing:3px;color:var(--g3);
+  margin-bottom:14px;
+}
+.dor-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:24px;font-weight:800;
+  color:var(--w);line-height:1.1;margin-bottom:10px;
+}
+.dor-t{
+  font-size:14px;font-weight:300;
+  color:var(--g2);line-height:1.7;
+}
+.dor-t strong{color:var(--g1);font-weight:500;}
+
+/* ── VIRADA ── */
+.virada{
+  background:var(--k2);
+  border-top:2px solid var(--y);
+  padding:48px 44px;
+  position:relative;overflow:hidden;
+}
+@media(max-width:600px){.virada{padding:32px 22px;}}
+.virada-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(30px,4vw,44px);
+  font-weight:900;text-transform:uppercase;
+  line-height:1.0;margin-bottom:20px;
+}
+.virada-h em{font-style:normal;color:var(--y);}
+.virada-p{
+  font-size:16px;font-weight:300;
+  color:var(--g1);line-height:1.8;max-width:620px;
+}
+.virada-p strong{color:var(--w);font-weight:500;}
+
+/* ── RESULTADOS ── */
+.results-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2px;margin:40px 0;
+}
+@media(max-width:640px){.results-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:400px){.results-grid{grid-template-columns:1fr;}}
+
+.result-img{
+  position:relative;
+  background:var(--k3);
+  overflow:hidden;
+  aspect-ratio:9/16;
+}
+.result-img img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .4s ease;
+}
+.result-img:hover img{transform:scale(1.03);}
+.result-placeholder{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:10px;padding:20px;
+  text-align:center;
+}
+.result-placeholder-icon{
+  width:44px;height:44px;
+  background:var(--k4);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+}
+.result-placeholder-icon svg{width:18px;height:18px;fill:var(--g3);}
+.result-placeholder p{
+  font-size:11px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--g3);
+  font-family:'Barlow Condensed',sans-serif;
+}
+
+/* ── PILARES ── */
+.pilares{
+  display:flex;flex-direction:column;gap:2px;
+  margin:40px 0;
+}
+.pilar{
+  display:grid;grid-template-columns:80px 1fr;
+  background:var(--k2);overflow:hidden;
+  transition:background .2s;
+}
+.pilar:hover{background:var(--k3);}
+.pilar-num{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--k3);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:32px;font-weight:900;
+  color:var(--y);
+  transition:background .2s;
+  align-self:stretch;
+}
+.pilar:hover .pilar-num{background:var(--y);color:var(--k);}
+.pilar-body{padding:28px 28px;}
+.pilar-tag{
+  font-size:10px;font-weight:600;
+  letter-spacing:4px;text-transform:uppercase;
+  color:var(--g3);margin-bottom:8px;
+}
+.pilar-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:26px;font-weight:800;
+  color:var(--w);margin-bottom:8px;line-height:1.1;
+}
+.pilar-p{
+  font-size:14px;font-weight:300;
+  color:var(--g2);line-height:1.65;
+}
+
+/* ── ENTREGAS ── */
+.ent-list{display:flex;flex-direction:column;gap:2px;margin:40px 0;}
+.ent{
+  display:grid;grid-template-columns:68px 1fr;
+  background:var(--k2);overflow:hidden;
+  transition:background .2s;
+}
+.ent:hover{background:var(--k3);}
+.ent-n{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--k3);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:18px;font-weight:700;
+  color:var(--g3);letter-spacing:1px;
+  align-self:stretch;
+  transition:background .2s,color .2s;
+}
+.ent:hover .ent-n{background:var(--y);color:var(--k);}
+.ent-body{padding:22px 24px;}
+.ent-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:20px;font-weight:700;
+  color:var(--w);margin-bottom:4px;line-height:1.1;
+}
+.ent-p{font-size:13px;font-weight:300;color:var(--g2);line-height:1.5;}
+
+/* ── ANCORAGEM ── */
+.ancora-grid{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  gap:2px;margin:40px 0;
+}
+@media(max-width:640px){.ancora-grid{grid-template-columns:1fr;}}
+.ancora-bloco{background:var(--k2);padding:32px 24px;position:relative;}
+.ancora-bloco.dest{background:var(--y);}
+.ancora-bloco-bar{
+  position:absolute;top:0;left:0;
+  width:100%;height:3px;background:var(--red);
+}
+.ancora-bloco.dest .ancora-bloco-bar{background:rgba(0,0,0,.2);}
+.ancora-tag2{
+  font-size:10px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--g2);
+  margin-bottom:14px;
+}
+.ancora-bloco.dest .ancora-tag2{color:rgba(0,0,0,.45);}
+.ancora-n{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:52px;font-weight:900;
+  color:var(--w);line-height:1;margin-bottom:8px;
+}
+.ancora-bloco.dest .ancora-n{color:var(--k);}
+.ancora-desc{font-size:13px;font-weight:300;color:var(--g2);line-height:1.6;}
+.ancora-bloco.dest .ancora-desc{color:rgba(0,0,0,.55);}
+
+.ancora-quote{
+  background:var(--k2);
+  border-left:3px solid var(--y);
+  padding:24px 28px;
+  font-size:18px;font-weight:300;
+  color:var(--g1);line-height:1.6;
+}
+.ancora-quote strong{color:var(--w);font-weight:500;}
+
+/* ── FUNIL ── */
+.funil{display:flex;flex-direction:column;align-items:stretch;gap:2px;margin:36px 0;}
+.funil-step{
+  display:flex;align-items:center;
+  justify-content:space-between;
+  padding:24px 32px;background:var(--k2);
+}
+.funil-step:nth-child(1){margin-left:0;}
+.funil-step:nth-child(3){margin-left:8%;}
+.funil-step:nth-child(5){margin-left:18%;background:var(--y);}
+.funil-n{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:52px;font-weight:900;
+  color:var(--y);line-height:1;
+}
+.funil-step:nth-child(5) .funil-n{color:var(--k);}
+.funil-r{text-align:right;}
+.funil-label{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--g2);margin-bottom:3px;}
+.funil-step:nth-child(5) .funil-label{color:rgba(0,0,0,.4);}
+.funil-desc{font-size:13px;font-weight:300;color:var(--g2);}
+.funil-step:nth-child(5) .funil-desc{color:rgba(0,0,0,.5);}
+.funil-arrow{text-align:left;padding:4px 32px;color:var(--g3);font-size:20px;}
+
+/* ── OBJEÇÃO ── */
+.obj{
+  background:var(--k2);border:1px solid #1A1A1A;
+  padding:40px 36px;position:relative;overflow:hidden;
+  margin:40px 0;
+}
+@media(max-width:600px){.obj{padding:28px 20px;}}
+.obj-q-mark{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:200px;font-weight:900;
+  color:var(--y);opacity:.04;
+  position:absolute;top:-40px;right:10px;
+  line-height:1;pointer-events:none;user-select:none;
+}
+.obj-q{
+  font-size:22px;font-style:italic;font-weight:300;
+  color:var(--g1);margin-bottom:20px;
+  position:relative;z-index:1;line-height:1.5;
+}
+.obj-r{
+  font-size:15px;font-weight:300;
+  color:var(--g2);line-height:1.8;
+  position:relative;z-index:1;
+}
+.obj-r strong{color:var(--w);font-weight:500;}
+
+/* ── ESCASSEZ ── */
+.escassez{
+  background:var(--k2);
+  border:1px solid #1E1E1E;
+  border-top:2px solid var(--red);
+  padding:44px 40px;text-align:center;
+  margin:0;
+}
+@media(max-width:600px){.escassez{padding:32px 20px;}}
+.live{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:11px;letter-spacing:3px;
+  text-transform:uppercase;color:var(--g2);
+  margin-bottom:24px;
+}
+.dot-red{
+  width:8px;height:8px;background:var(--red);
+  border-radius:50%;
+  animation:blink 1.5s infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(255,59,59,.4);}
+  50%{opacity:.5;box-shadow:0 0 0 6px rgba(255,59,59,0);}
+}
+.escassez-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:clamp(36px,5vw,56px);
+  line-height:.95;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:16px;
+}
+.escassez-h em{font-style:normal;color:var(--y);}
+.escassez-p{
+  font-size:16px;font-weight:300;
+  color:var(--g1);max-width:560px;
+  margin:0 auto 12px;line-height:1.7;
+}
+.escassez-p strong{color:var(--w);font-weight:500;}
+
+/* ── CTA SECTION ── */
+.cta-section{
+  text-align:center;padding:72px 24px 100px;
+  max-width:760px;margin:0 auto;
+}
+.cta-h{
+  font-family:'Barlow Condensed',sans-serif;
+  font-weight:900;
+  font-size:clamp(48px,8vw,88px);
+  line-height:.9;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:24px;
+}
+.cta-h em{font-style:normal;color:var(--y);}
+.cta-h .dim{
+  -webkit-text-stroke:1.5px rgba(255,255,255,.3);
+  color:transparent;display:block;
+}
+.cta-p{
+  font-size:17px;font-weight:300;
+  color:var(--g1);max-width:480px;
+  margin:0 auto 44px;line-height:1.7;
+}
+.cta-p strong{color:var(--w);font-weight:500;}
+
+.btn-main{
+  display:inline-flex;align-items:center;
+  justify-content:center;gap:14px;
+  background:var(--y);color:var(--k);
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:17px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;
+  text-decoration:none;
+  padding:22px 52px;
+  position:relative;overflow:hidden;
+  transition:transform .15s,box-shadow .2s;
+  box-shadow:0 4px 30px rgba(255,208,0,.2);
+}
+.btn-main::before{
+  content:'';position:absolute;inset:0;
+  background:var(--w);
+  transform:translateX(-101%);
+  transition:transform .35s ease;
+}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(255,208,0,.35);}
+.btn-main:hover::before{transform:translateX(0);}
+.btn-main span,.btn-main svg{position:relative;z-index:1;}
+.btn-main svg{width:22px;height:22px;fill:var(--k);flex-shrink:0;}
+.cta-fine{
+  font-size:12px;color:var(--g3);
+  margin-top:18px;letter-spacing:1px;
+}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid #111;
+  padding:28px 24px;text-align:center;
+  font-size:11px;color:var(--g3);
+  letter-spacing:2px;text-transform:uppercase;
+}
+footer span{color:var(--y);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(28px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.rv.in{opacity:1;transform:translateY(0);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:480px){
+  .hero{padding:40px 16px 0;}
+  .player-wrap{padding:0 16px;}
+  .s{padding:0 16px;}
+
+  .funil-step:nth-child(3){margin-left:0;}
+  .funil-step:nth-child(5){margin-left:0;}
+  .funil-step{padding:20px 20px;}
+  .funil-n{font-size:40px;}
+
+  .ancora-n{font-size:36px;}
+  .ancora-grid{grid-template-columns:1fr;}
+
+  .pilar{grid-template-columns:56px 1fr;}
+  .pilar-num{font-size:24px;}
+  .pilar-body{padding:20px 18px;}
+
+  .ent{grid-template-columns:52px 1fr;}
+  .ent-body{padding:18px 16px;}
+  .ent-h{font-size:17px;}
+
+  .results-grid{grid-template-columns:1fr;}
+  .dores-grid{grid-template-columns:1fr;}
+  .dor{padding:24px 20px;}
+
+  .virada{padding:28px 20px;}
+  .escassez{padding:28px 20px;}
+  .escassez-h{font-size:36px;}
+  .obj{padding:24px 18px;}
+  .obj-q{font-size:18px;}
+
+  #btn-float{width:calc(100% - 32px);left:16px;transform:none;}
+  #btn-float.show{display:flex;}
+  .btn-float-inner{width:100%;padding:18px 20px;font-size:13px;justify-content:center;}
+  .vagas-badge{display:none;}
+
+  .btn-main{padding:18px 24px;font-size:14px;width:100%;justify-content:center;}
+  .cta-section{padding:52px 16px 80px;}
+  .hero-proof{font-size:11px;padding:10px 14px;text-align:center;}
+  .sep{margin:48px 0;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">Método Solar 100k</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Sistema completo · Energia Solar</div>
+  <h1 class="hero-h1">
+    <span class="dim">venda todo mês</span>
+    <em>sem depender</em>
+    de indicação
+  </h1>
+  <p class="hero-sub">
+    <strong>Seu concorrente não é melhor que você.</strong>
+    Ele só tem um sistema que gera cliente novo todo mês —
+    da geração de demanda até o fechamento.
+    Você está prestes a ver esse sistema.
+  </p>
+  <div class="hero-proof">
+    <div class="dot"></div>
+    Por <b>&nbsp;Fabia&nbsp;</b> · Ex-vendedora de solar · 4 anos de resultados no setor
+  </div>
+</section>
+
+<!-- PLAYER -->
+<div class="player-wrap">
+  <div class="player-box">
+    <!--
+    ════════════════════════════════════════════════
+    COLE AQUI O CÓDIGO DO PLAYER DA VTURB
+    Substitua todo o bloco player-inner abaixo.
+
+    Para revelar a página no minuto 11:01:
+    Em "Ações Automáticas" da Vturb, adicione:
+    → Tipo: Executar JavaScript
+    → Tempo: 00:11:01
+    → Código: revelar();
+    ════════════════════════════════════════════════
+    -->
+    <div class="player-inner">
+      <div class="play-icon">
+        <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </div>
+      <p>Assista antes de continuar</p>
+    </div>
+  </div>
+</div>
+
+<!-- BOTÃO TESTE (remova em produção) -->
+<div style="text-align:center;padding:20px 0 0;">
+  <button onclick="revelar()" style="background:transparent;border:1px solid #222;color:#444;font-size:10px;letter-spacing:2px;padding:10px 18px;cursor:pointer;font-family:'DM Sans',sans-serif;text-transform:uppercase;">
+    [ simular 11:01 — revelar página ]
+  </button>
+</div>
+
+<!-- ══════════════════════════════════════════
+     TUDO ABAIXO APARECE AOS 11:01
+     ══════════════════════════════════════════ -->
+<div id="reveal">
+
+  <!-- BOTÃO FLUTUANTE -->
+  <div id="btn-float" class="show">
+    <a href="https://wa.me/5531998853305" target="_blank" class="btn-float-inner">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span>Quero minha vaga</span>
+      <div class="vagas-badge">5 vagas</div>
+    </a>
+  </div>
+
+  <div class="sep"></div>
+
+  <!-- DORES -->
+  <section class="s">
+    <span class="eyebrow rv">Você se reconhece aqui?</span>
+    <h2 class="sec-h rv">O problema não<br>é você. <span>É o modelo.</span></h2>
+    <p class="sec-p rv">A maioria das empresas de solar trava no mesmo ciclo todo mês. Não é azar. É o modelo errado sendo repetido.</p>
+
+    <div class="dores-grid">
+      <div class="dor rv">
+        <div class="dor-n">01</div>
+        <div class="dor-h">Esperando o telefone tocar</div>
+        <div class="dor-t">Mês bom vem indicação. Mês ruim você para. <strong>Você não controla quantos clientes entram</strong> — e negócio sem controle não cresce.</div>
+      </div>
+      <div class="dor rv">
+        <div class="dor-n">02</div>
+        <div class="dor-h">Pagou agência e não viu resultado</div>
+        <div class="dor-t">R$3.000, R$4.000 por mês. Leads ruins, nenhum fechando, gestor que some. <strong>Gestor genérico não conhece solar</strong> — usa o mesmo criativo pra academia.</div>
+      </div>
+      <div class="dor rv">
+        <div class="dor-n">03</div>
+        <div class="dor-h">Tentou sozinho e perdeu dinheiro</div>
+        <div class="dor-t">Entrou no gerenciador, gastou, não entendeu o que aconteceu. <strong>Lead caro, lead errado</strong> — ou simplesmente nada.</div>
+      </div>
+      <div class="dor rv">
+        <div class="dor-n">04</div>
+        <div class="dor-h">Seu concorrente está na sua frente</div>
+        <div class="dor-t">Você é melhor. Tem mais experiência. Atende melhor. E mesmo assim ele está crescendo e você não. <strong>A diferença é um sistema. Não qualidade.</strong></div>
+      </div>
+    </div>
+
+    <div class="virada rv">
+      <h3 class="virada-h">Eu era a vendedora<br>do <em>outro lado dessa mesa.</em></h3>
+      <p class="virada-p">
+        Recebi lead ruim. Tentei fechar cliente frio. Vi venda escapar por falta de processo.
+        Quando aprendi a gerar demanda, aprendi com <strong>4 anos de setor solar na cabeça</strong> — não numa agência genérica.
+        <br><br>
+        Vendi <strong>R$250k em 30 dias</strong> sem uma indicação. Abri minha empresa. Há 4 anos trabalho exclusivamente com empresas de solar. Sei onde a venda quebra — porque eu fui a vendedora que quebrava junto.
+      </p>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- RESULTADOS -->
+  <section class="s">
+    <span class="eyebrow rv">Prova real</span>
+    <h2 class="sec-h rv">Não é promessa.<br><span>É print.</span></h2>
+    <p class="sec-p rv">Resultados reais de empresas de solar aplicando o sistema. Custo por cliente, volume de demanda, vendas fechadas.</p>
+
+    <div class="results-grid">
+      <!-- PRINT 1 -->
+      <div class="result-img rv">
+        <!-- Para usar: <img src="SEU_LINK_DRIVE_1" alt="Resultado 1"> -->
+        <img src="https://drive.google.com/uc?export=view&id=1jvcs83Rt9Xmebhs0cx-_UACP1VVtPo9h" alt="Resultado 1" loading="lazy">
+      </div>
+      <!-- PRINT 2 -->
+      <div class="result-img rv">
+        <img src="https://drive.google.com/uc?export=view&id=1DHWq6unnoxNQwogIff0YdTIomZUiy4xd" alt="Resultado 2" loading="lazy">
+      </div>
+      <!-- PRINT 3 -->
+      <div class="result-img rv">
+        <img src="https://drive.google.com/uc?export=view&id=166CxEE2ZaNlL7khYvNqE9Mt7QMlkKZc1" alt="Resultado 3" loading="lazy">
+      </div>
+      <!-- PRINT 4 -->
+      <div class="result-img rv">
+        <img src="https://drive.google.com/uc?export=view&id=1frUSIWT9_lUWETtOIO3UbJIYV7uJp5vP" alt="Resultado 4" loading="lazy">
+      </div>
+      <!-- PRINT 5 -->
+      <div class="result-img rv">
+        <img src="https://drive.google.com/uc?export=view&id=1BLMouiPFhlKdbNTuGuo2mXQu9J26aH8w" alt="Resultado 5" loading="lazy">
+      </div>
+      <!-- PRINT 6 -->
+      <div class="result-img rv">
+        <img src="https://drive.google.com/uc?export=view&id=11KtcyeaI_5arKUsIhOkFnOMl-KeVIpHV" alt="Resultado 6" loading="lazy">
+      </div>
+      <!-- PRINT 7 -->
+      <div class="result-img rv">
+        <img src="https://drive.google.com/uc?export=view&id=1xSQf7JgU5ECzDbLEADh2dIy_CN-7eWNv" alt="Resultado 7" loading="lazy">
+      </div>
+    </div>
+
+    <!-- instrução para adicionar imagens -->
+    <!-- Para cada print: substitua o bloco result-placeholder por:
+         <img src="https://drive.google.com/uc?export=view&id=SEU_ID_AQUI" alt="Resultado">
+         O ID está na URL do Drive após /d/ -->
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- OS 3 PILARES -->
+  <section class="s">
+    <span class="eyebrow rv">O sistema</span>
+    <h2 class="sec-h rv">3 pilares.<br><span>Vendas previsíveis</span><br>todo mês.</h2>
+    <p class="sec-p rv">Não é mentoria de tráfego. É o sistema completo — da geração de demanda até o fechamento. Cada pilar resolve um ponto onde empresa de solar trava.</p>
+
+    <div class="pilares">
+      <div class="pilar rv">
+        <div class="pilar-num">01</div>
+        <div class="pilar-body">
+          <div class="pilar-tag">Pilar 1</div>
+          <div class="pilar-h">Geração de Demanda</div>
+          <div class="pilar-p">Estrutura de campanha com resultado em 24 a 48 horas. 90% das empresas têm cliente interessado chegando no mesmo dia. Criativos validados no mercado solar — sem gravar vídeo, sem produção cara. Você adapta e sobe.</div>
+        </div>
+      </div>
+      <div class="pilar rv">
+        <div class="pilar-num">02</div>
+        <div class="pilar-body">
+          <div class="pilar-tag">Pilar 2</div>
+          <div class="pilar-h">Atendimento com Processo</div>
+          <div class="pilar-p">Scripts validados de primeiro contato e qualificação. O que falar na primeira mensagem, como conduzir até o orçamento sem perder o cliente. Cada mensagem testada no mercado solar — sem improvisar, sem deixar o lead esfriar.</div>
+        </div>
+      </div>
+      <div class="pilar rv">
+        <div class="pilar-num">03</div>
+        <div class="pilar-body">
+          <div class="pilar-tag">Pilar 3</div>
+          <div class="pilar-h">Fechamento e Follow Up</div>
+          <div class="pilar-p">Cadência estruturada pra cada cenário — cliente sumiu, pediu orçamento e travou, disse que vai pensar. Mais treinamento de vendas completo do primeiro contato ao fechamento, dentro do contexto de energia solar. Acesso ao Notion com todo o material.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- ENTREGAS -->
+  <section class="s">
+    <span class="eyebrow rv">O que está incluído</span>
+    <h2 class="sec-h rv">Do zero<br><span>ao resultado.</span></h2>
+    <p class="sec-p rv">Não é curso pra você assistir sozinho e travar na primeira dúvida. É acompanhamento real, com sistema pronto, do início ao fim.</p>
+
+    <div class="ent-list">
+      <div class="ent rv">
+        <div class="ent-n">01</div>
+        <div class="ent-body">
+          <div class="ent-h">Estrutura de geração de demanda com resultado em 24-48h</div>
+          <div class="ent-p">90% das empresas têm cliente chegando no mesmo dia que a campanha sobe</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">02</div>
+        <div class="ent-body">
+          <div class="ent-h">+10 criativos validados prontos pra adaptar</div>
+          <div class="ent-p">Sem gravar vídeo. Sem produção cara. Adapta com sua empresa e sobe — já testados no mercado solar</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">03</div>
+        <div class="ent-body">
+          <div class="ent-h">Configuração do zero: conta, pixel e página</div>
+          <div class="ent-p">Nunca rodou anúncio antes? A gente começa do início sem pular etapa</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">04</div>
+        <div class="ent-body">
+          <div class="ent-h">Scripts validados de atendimento e qualificação</div>
+          <div class="ent-p">O que falar em cada momento — do primeiro contato até o orçamento marcado</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">05</div>
+        <div class="ent-body">
+          <div class="ent-h">Cadência de follow up para cada cenário</div>
+          <div class="ent-p">Cliente frio, cliente sumido, cliente que travou no orçamento — resposta certa pra cada situação</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">06</div>
+        <div class="ent-body">
+          <div class="ent-h">Treinamento de vendas completo — acesso ao Notion</div>
+          <div class="ent-p">Do primeiro contato ao fechamento, dentro do contexto de energia solar. Compartilhe com sua equipe</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">07</div>
+        <div class="ent-body">
+          <div class="ent-h">4 encontros ao vivo com acompanhamento direto</div>
+          <div class="ent-p">Cada etapa acompanhada — você não trava em nenhum ponto do processo</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">08</div>
+        <div class="ent-body">
+          <div class="ent-h">Suporte WhatsApp por 30 dias</div>
+          <div class="ent-p">Dúvida na campanha ou no atendimento? Você não fica no escuro — resposta em horário comercial</div>
+        </div>
+      </div>
+      <div class="ent rv">
+        <div class="ent-n">09</div>
+        <div class="ent-body">
+          <div class="ent-h">Todas as aulas gravadas disponíveis</div>
+          <div class="ent-p">Perdeu um encontro ao vivo? Reveja quando quiser. Compartilhe com quem precisar</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- ANCORAGEM -->
+  <section class="s">
+    <span class="eyebrow rv">Antes do investimento</span>
+    <h2 class="sec-h rv">Quanto custa<br><span>montar isso sozinho?</span></h2>
+
+    <div class="ancora-grid rv">
+      <div class="ancora-bloco">
+        <div class="ancora-bloco-bar"></div>
+        <div class="ancora-tag2">Quem opera pra você / mês</div>
+        <div class="ancora-n">R$3k+</div>
+        <div class="ancora-desc">Todo mês. Com resultado ou sem. E você nunca aprende nada.</div>
+      </div>
+      <div class="ancora-bloco">
+        <div class="ancora-bloco-bar"></div>
+        <div class="ancora-tag2">Consultoria de vendas + scripts</div>
+        <div class="ancora-n">R$5k+</div>
+        <div class="ancora-desc">Avulso. Sem contexto de solar. Sem treinamento de equipe incluído.</div>
+      </div>
+      <div class="ancora-bloco dest">
+        <div class="ancora-bloco-bar"></div>
+        <div class="ancora-tag2">Método Solar 100k</div>
+        <div class="ancora-n">1×</div>
+        <div class="ancora-desc">Investimento único. Os três pilares. Você aprende, replica e tem controle pra sempre.</div>
+      </div>
+    </div>
+
+    <div class="ancora-quote rv">
+      Um único projeto pequeno de solar já cobre o investimento —
+      <strong>e ainda sobra lucro.</strong>
+      Você recupera na primeira semana de sistema rodando.
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- FUNIL -->
+  <section class="s">
+    <span class="eyebrow rv">A matemática</span>
+    <h2 class="sec-h rv">Por que <span>100k</span><br>não é exagero.</h2>
+    <p class="sec-p rv">Com volume de demanda e processo de atendimento certo, a conta fecha sozinha.</p>
+
+    <div class="funil rv">
+      <div class="funil-step">
+        <div class="funil-n">100</div>
+        <div class="funil-r">
+          <div class="funil-label">Clientes interessados</div>
+          <div class="funil-desc">Chegam pelo sistema, já com perfil de compra</div>
+        </div>
+      </div>
+      <div class="funil-arrow">↓</div>
+      <div class="funil-step">
+        <div class="funil-n">~30</div>
+        <div class="funil-r">
+          <div class="funil-label">Pedem orçamento</div>
+          <div class="funil-desc">Com processo de atendimento certo</div>
+        </div>
+      </div>
+      <div class="funil-arrow">↓</div>
+      <div class="funil-step">
+        <div class="funil-n">~3</div>
+        <div class="funil-r">
+          <div class="funil-label">Fecham vendas</div>
+          <div class="funil-desc">Ticket médio R$35k = +100k no 3º mês</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="obj rv">
+      <div class="obj-q-mark">"</div>
+      <p class="obj-q">"Mas lead não quer dizer venda."</p>
+      <p class="obj-r">
+        Verdade absoluta. <strong>Mas sem demanda não existe orçamento. Sem orçamento não existe venda.</strong>
+        Você não pula etapa.
+        <br><br>
+        Quem tem 20 leads por mês tem menos de 1 venda garantida estatisticamente.
+        Quem tem 80 tem 2 a 3 vendas todo mês — previsível, controlável.
+        <br><br>
+        <strong>E não precisa ser o mais barato da cidade.</strong>
+        Quem compra pelo preço mínimo não é o cliente que você quer.
+        Você precisa de volume — e de um processo que não deixa esse cliente escapar.
+      </p>
+    </div>
+  </section>
+
+  <div class="sep"></div>
+
+  <!-- ESCASSEZ -->
+  <section class="s">
+    <div class="escassez rv">
+      <div class="live"><div class="dot-red"></div>Vagas abertas agora</div>
+      <h2 class="escassez-h">São <em>5 vagas.</em><br>Não é gatilho falso.</h2>
+      <p class="escassez-p">Trabalho de perto com cada aluno durante os 4 encontros e 30 dias de suporte. <strong>Mais do que isso compromete o resultado</strong> — e resultado é o único motivo pelo qual meus alunos indicam outros.</p>
+      <p class="escassez-p">Quando as 5 vagas fecharem, <strong>próxima turma sem data definida.</strong></p>
+      <p class="escassez-p" style="margin-top:16px;">Você viu como funciona. Viu os resultados. Entendeu a matemática.<br>A única pergunta é: você vai agir agora — ou vai continuar vendo seu concorrente na sua frente mais um mês?</p>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <div class="cta-section">
+    <h2 class="cta-h rv">
+      <span class="dim">chega de</span>
+      <em>esperar</em>
+      indicação
+    </h2>
+    <p class="cta-p rv">
+      Clica no botão abaixo e me chama no WhatsApp.
+      <strong>Sem call longa, sem processo burocrático.</strong>
+      Você entendeu, quer entrar — me chama.
+    </p>
+    <a href="https://wa.me/5531998853305" target="_blank" class="btn-main rv">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span>Quero minha vaga — Método Solar 100k</span>
+    </a>
+    <p class="cta-fine rv">5 vagas · por ordem de inscrição · se está lendo isso, ainda tem vaga</p>
+  </div>
+
+</div><!-- fim #reveal -->
+
+<footer>
+  <span>Método Solar 100k</span> &nbsp;·&nbsp; Sistema completo de vendas para energia solar &nbsp;·&nbsp; por Fabia
+</footer>
+
+<script>
+function revelar(){
+  const el = document.getElementById('reveal');
+  const btn = document.getElementById('btn-float');
+  el.style.display = 'block';
+  requestAnimationFrame(()=>{
+    el.classList.add('on');
+    btn.classList.add('show');
+    initReveal();
+  });
+}
+
+function initReveal(){
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+}
+
+// Vturb: em "Ações Automáticas" → "Executar JavaScript" → tempo 00:11:01 → cole: revelar();
+</script>
+</body>
+</html>
