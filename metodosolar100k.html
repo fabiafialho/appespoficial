@@ -991,6 +991,23 @@ function revelar(){
   });
 }
 
+// Verifica o tempo do vídeo a cada segundo
+setInterval(function(){
+  const player = document.getElementById('vid-6a1b451735319bc2b5e792bd');
+  if(player && player.currentTime >= 661 && !document.getElementById('reveal').classList.contains('on')){
+    revelar();
+  }
+}, 1000);
+  const el = document.getElementById('reveal');
+  const btn = document.getElementById('btn-float');
+  el.style.display = 'block';
+  requestAnimationFrame(()=>{
+    el.classList.add('on');
+    btn.classList.add('show');
+    initReveal();
+  });
+}
+
 function initReveal(){
   const obs = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
