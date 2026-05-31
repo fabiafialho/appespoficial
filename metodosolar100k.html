@@ -644,7 +644,7 @@ footer span{color:var(--y);}
 <!-- ══════════════════════════════════════════
      TUDO ABAIXO APARECE AOS 11:01
      ══════════════════════════════════════════ -->
-<div id="reveal">
+<div id="reveal" style="scroll-margin-top:0;">
 
   <!-- BOTÃO FLUTUANTE -->
   <div id="btn-float" class="show">
@@ -989,7 +989,10 @@ function revelar(){
     initReveal();
   });
 }
-
+// Abre se a URL tiver #reveal
+if(window.location.hash === '#reveal'){
+  revelar();
+}
 // Verifica o tempo do vídeo a cada segundo
 setInterval(function(){
   const player = document.getElementById('vid-6a1b451735319bc2b5e792bd');
