@@ -982,26 +982,7 @@ footer span{color:var(--y);}
 function revelar(){
   const el = document.getElementById('reveal');
   const btn = document.getElementById('btn-float');
-  el.style.display = 'block';
-  requestAnimationFrame(()=>{
-    el.classList.add('on');
-    btn.classList.add('show');
-    initReveal();
-  });
-}
-// Abre se a URL tiver #reveal
-if(window.location.hash === '#reveal'){
-  revelar();
-}
-// Verifica o tempo do vídeo a cada segundo
-setInterval(function(){
-  const player = document.getElementById('vid-6a1b451735319bc2b5e792bd');
-  if(player && player.currentTime >= 661 && !document.getElementById('reveal').classList.contains('on')){
-    revelar();
-  }
-}, 1000);
-  const el = document.getElementById('reveal');
-  const btn = document.getElementById('btn-float');
+  if(el.classList.contains('on')) return;
   el.style.display = 'block';
   requestAnimationFrame(()=>{
     el.classList.add('on');
@@ -1022,7 +1003,11 @@ function initReveal(){
   document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
 }
 
-// Vturb: em "Ações Automáticas" → "Executar JavaScript" → tempo 00:11:01 → cole: revelar();
+// Abre pelo hash da Vturb
+if(window.location.hash === '#reveal') revelar();
+
+// Abre por temporizador — 661 segundos = 11min01s
+setTimeout(revelar, 661000);
 </script>
 </body>
 </html>
